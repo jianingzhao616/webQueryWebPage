@@ -1,0 +1,100 @@
+html,body{
+            width:100%;
+            height:100%
+        }
+        body{
+            font-family: "华文细黑";
+            background:url("https://i.loli.net/2020/07/26/JWXpzvL15SkNtO3.jpg") no-repeat;
+            background-size: 100%;
+        }
+        #s_1{
+            float:left;
+            text-indent:35px;
+        }
+        #s_2{
+            float:left;
+        }
+        #s_3{
+            float:left;
+            text-indent:35px;
+        }
+        #s_4{
+            float:left;
+        }
+        #s_5{
+            float:left;
+            text-indent:25px;
+        }
+        #s_6{
+            float:left;
+            text-indent:20px;
+        }
+        #teab_101{
+            font-size:large;
+            font-family:"微软雅黑";
+        }
+        #teab_102{
+            font-size:large;
+            font-family:"微软雅黑";
+        }
+        #li_l1{
+            font-size:large;
+            font-family:"微软雅黑";
+        }
+        #li_l2{
+            font-size:large;
+            font-family:"微软雅黑";
+        }
+        #div_login1{
+            width:500px;
+            height: 870px;
+            background-color:rgba(58,58,58,0.5);
+            position: absolute;
+            left: 300px;
+            top: 0px;
+            margin:50px 50px;
+            padding: 0px
+        }
+        #div_login2{
+            width:500px;
+            height: 870px;
+            background-color:rgba(58,58,58,0.5);
+            position: absolute;
+            left: 900px;
+            top: 0px;
+            margin:50px 50px;
+            padding: 0px;
+        }
+        #div_title{
+            width: 500px;
+            height: 60px;
+            font-family:"楷体";
+            font-size:12px;
+            background-color:rgba(0,0,0,0.5);
+            text-align: center;
+            line-height: 60px;
+            color:blanchedalmond;
+        }
+        *{
+            margin:0px;
+            padding: 0px;
+        }
+        #midden{
+            width:500px;
+            height: 810px;
+            background-color: rgba(77, 75, 75, 0.5);
+        }
+        .submitbutton{
+            width: 230px;
+            height:40px;
+            margin:10px 10px 10px 10px;
+            color:rgb(255,255,255);
+            background-color: rgba(89, 89, 89, 0.5);
+            float: left;
+        }
+        #info{
+            width:500px;
+            text-align: center;
+            margin: 0 auto;
+            color:rgb(255,255,255) ;
+        }

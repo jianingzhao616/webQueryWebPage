@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .user {
+        line-height: 250%;
+    }
+    .user ul{
+        list-style: none;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>校园网络查询服务监控</title>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+    <div id="div_login1">
+        <div id="div_title"><h1>教室</h1></div>
+        <div id="midden">
+        	<select class="submitbutton" id="selected_1">
+        		<option select="selected" id="x1"> </option>
+        		<option id="x2" value="1001">教室101</option>
+        		<option id="x3" value="1002">教室102</option>
+        		<option id="x4" value="1003">图书馆1层</option>
+        		<option id="x5" value="1004">图书馆2层</option>
+        	</select>
+            <button type="button" class="submitbutton" id="chkBtn_1">点击此处刷新</button>
+            <div id="info">
+                    <p>这里是获取服务器数据显示当前状态的监控网页</p>
+                    <div id="teab_101"></div>
+                    <div id="s_1"></div>
+                    <div id="s_2"></div>
+                    <div id="teab_102"></div>
+                    <div id="s_3"></div>
+                    <div id="s_4"></div>
+                </div>
+        </div>
+        
+    </div>
+    <div id="div_login2">
+        <div id="div_title"><h1>图书馆</h1></div>
+        <div id="midden">
+        	<select class="submitbutton" id="selected_2">
+        		<option select="selected" id="x1"> </option>
+        		<option id="x2" value="1001">教室101</option>
+        		<option id="x3" value="1002">教室102</option>
+        		<option id="x4" value="1003">图书馆1层</option>
+        		<option id="x5" value="1004">图书馆2层</option>
+        	</select>
+            <button type="button" class="submitbutton" id="chkBtn_2">点击此处刷新</button>
+            <div id="info">
+                    <p>这里是获取服务器数据显示当前状态的监控网页</p>
+                    <div id="li_l1"></div>
+                    <div id="s_5"></div>
+                    <div id="li_l2"></div>
+                    <div id="s_6"></div>
+                </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    document.getElementById('chkBtn_1').addEventListener('click',loadJson_1);
+    document.getElementById('chkBtn_2').addEventListener('click',loadJson_2);
+
+$(document).ready(function(){
+
+$("#selected_1").on("change",function(){
+var s_101_102=0;
+var s_101_1=0;
+var s_101_2=0;
+var s_102_1=0;
+var s_102_2=0;
+var s_1_2=0;
+var user_01;
+if ($("option:selected",this).val() == '1001') {
+
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距教学楼102
+                s_101_102=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_01.Routers[1].LocX)*(user_01.Routers[0].LocX-user_01.Routers[1].LocX)+(user_01.Routers[0].LocY-user_01.Routers[1].LocY)*(user_01.Routers[0].LocY-user_01.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s1=s_101_102;
+               output_s1=`
+                      <div class="user">
+                            <ul>
+                                <li>教室101距离：教室102: ${s_101_102}；<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_1').innerHTML=output_s1;
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距教学楼102
+                var s_102_101=s_101_102;
+                //教学楼101距图书馆1层
+                s_101_1=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[0].LocX)*(user_01.Routers[0].LocX-user_02.Routers[0].LocX)+(user_01.Routers[0].LocY-user_02.Routers[0].LocY)*(user_01.Routers[0].LocY-user_02.Routers[0].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)));
+                //教学楼101距图书馆2层
+                s_101_2=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[1].LocX)*(user_01.Routers[0].LocX-user_02.Routers[1].LocX)+(user_01.Routers[0].LocY-user_02.Routers[1].LocY)*(user_01.Routers[0].LocY-user_02.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s2=s_102_101;
+               output_s2=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆1层: ${s_101_1}；图书馆2层: ${s_101_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_2').innerHTML=output_s2;
+            }
+
+xhr_1.send();
+xhr_2.send();
+
+}
+else if ($("option:selected",this).val() == '1002') {
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼102距教学楼101
+                s_101_102=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_01.Routers[1].LocX)*(user_01.Routers[0].LocX-user_01.Routers[1].LocX)+(user_01.Routers[0].LocY-user_01.Routers[1].LocY)*(user_01.Routers[0].LocY-user_01.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s3=s_101_102;
+               output_s3=`
+                      <div class="user">
+                            <ul>
+                                <li>教室102距离：教室101: ${s_101_102}；<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_3').innerHTML=output_s3;
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼102距图书馆1层
+                s_102_1=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[0].LocX)*(user_01.Routers[1].LocX-user_02.Routers[0].LocX)+(user_01.Routers[1].LocY-user_02.Routers[0].LocY)*(user_01.Routers[1].LocY-user_02.Routers[0].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //教学楼102距图书馆2层
+                s_102_2=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[1].LocX)*(user_01.Routers[1].LocX-user_02.Routers[1].LocX)+(user_01.Routers[1].LocY-user_02.Routers[1].LocY)*(user_01.Routers[1].LocY-user_02.Routers[1].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s4=s_101_102;
+               output_s4=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆1层: ${s_102_1}；图书馆2层: ${s_102_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_4').innerHTML=output_s4;
+            }
+
+xhr_1.send();
+xhr_2.send();
+}
+else if ($("option:selected",this).val() == '1003') {
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距图书馆1层
+                s_101_1=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[0].LocX)*(user_01.Routers[0].LocX-user_02.Routers[0].LocX)+(user_01.Routers[0].LocY-user_02.Routers[0].LocY)*(user_01.Routers[0].LocY-user_02.Routers[0].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)));
+                //教学楼102距图书馆1层
+                s_102_1=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[0].LocX)*(user_01.Routers[1].LocX-user_02.Routers[0].LocX)+(user_01.Routers[1].LocY-user_02.Routers[0].LocY)*(user_01.Routers[1].LocY-user_02.Routers[0].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //图书馆2层距图书馆1层
+                s_1_2=Math.round(Math.sqrt((user_02.Routers[1].LocX-user_02.Routers[0].LocX)*(user_02.Routers[1].LocX-user_02.Routers[0].LocX)+(user_02.Routers[1].LocY-user_02.Routers[0].LocY)*(user_02.Routers[1].LocY-user_02.Routers[0].LocY)+(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //console.log(trying);
+
+                var output_s5=s_101_1;
+               output_s5=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆1层距离: 教学楼101：${s_101_1}；教学楼102：${s_102_1}；图书馆2层: ${s_1_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_5').innerHTML=output_s5;
+            }
+
+xhr_1.send();
+xhr_2.send();
+}
+else{
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距图书馆2层
+                s_101_2=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[1].LocX)*(user_01.Routers[0].LocX-user_02.Routers[1].LocX)+(user_01.Routers[0].LocY-user_02.Routers[1].LocY)*(user_01.Routers[0].LocY-user_02.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)));
+                //教学楼102距图书馆2层
+                s_102_2=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[1].LocX)*(user_01.Routers[1].LocX-user_02.Routers[1].LocX)+(user_01.Routers[1].LocY-user_02.Routers[1].LocY)*(user_01.Routers[1].LocY-user_02.Routers[1].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)));
+                //图书馆2层距图书馆1层
+                s_1_2=Math.round(Math.sqrt((user_02.Routers[1].LocX-user_02.Routers[0].LocX)*(user_02.Routers[1].LocX-user_02.Routers[0].LocX)+(user_02.Routers[1].LocY-user_02.Routers[0].LocY)*(user_02.Routers[1].LocY-user_02.Routers[0].LocY)+(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //console.log(trying);
+
+                var output_s6=s_101_1;
+               output_s6=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆2层距离: 教学楼101：${s_101_2}；教学楼102：${s_102_2}；图书馆1层: ${s_1_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_6').innerHTML=output_s6;
+            }
+
+xhr_1.send();
+xhr_2.send();
+}
+});
+
+
+
+
+
+$("#selected_2").on("change",function(){
+var s_101_102=0;
+var s_101_1=0;
+var s_101_2=0;
+var s_102_1=0;
+var s_102_2=0;
+var s_1_2=0;
+var user_01;
+if ($("option:selected",this).val() == '1001') {
+
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距教学楼102
+                s_101_102=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_01.Routers[1].LocX)*(user_01.Routers[0].LocX-user_01.Routers[1].LocX)+(user_01.Routers[0].LocY-user_01.Routers[1].LocY)*(user_01.Routers[0].LocY-user_01.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s1=s_101_102;
+               output_s1=`
+                      <div class="user">
+                            <ul>
+                                <li>教室101距离：教室102: ${s_101_102}；<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_1').innerHTML=output_s1;
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距教学楼102
+                var s_102_101=s_101_102;
+                //教学楼101距图书馆1层
+                s_101_1=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[0].LocX)*(user_01.Routers[0].LocX-user_02.Routers[0].LocX)+(user_01.Routers[0].LocY-user_02.Routers[0].LocY)*(user_01.Routers[0].LocY-user_02.Routers[0].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)));
+                //教学楼101距图书馆2层
+                s_101_2=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[1].LocX)*(user_01.Routers[0].LocX-user_02.Routers[1].LocX)+(user_01.Routers[0].LocY-user_02.Routers[1].LocY)*(user_01.Routers[0].LocY-user_02.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s2=s_102_101;
+               output_s2=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆1层: ${s_101_1}；图书馆2层: ${s_101_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_2').innerHTML=output_s2;
+            }
+
+xhr_1.send();
+xhr_2.send();
+
+}
+else if ($("option:selected",this).val() == '1002') {
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼102距教学楼101
+                s_101_102=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_01.Routers[1].LocX)*(user_01.Routers[0].LocX-user_01.Routers[1].LocX)+(user_01.Routers[0].LocY-user_01.Routers[1].LocY)*(user_01.Routers[0].LocY-user_01.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_01.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s3=s_101_102;
+               output_s3=`
+                      <div class="user">
+                            <ul>
+                                <li>教室102距离：教室101: ${s_101_102}；<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_3').innerHTML=output_s3;
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼102距图书馆1层
+                s_102_1=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[0].LocX)*(user_01.Routers[1].LocX-user_02.Routers[0].LocX)+(user_01.Routers[1].LocY-user_02.Routers[0].LocY)*(user_01.Routers[1].LocY-user_02.Routers[0].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //教学楼102距图书馆2层
+                s_102_2=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[1].LocX)*(user_01.Routers[1].LocX-user_02.Routers[1].LocX)+(user_01.Routers[1].LocY-user_02.Routers[1].LocY)*(user_01.Routers[1].LocY-user_02.Routers[1].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)));
+                //console.log(trying);
+
+                var output_s4=s_101_102;
+               output_s4=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆1层: ${s_102_1}；图书馆2层: ${s_102_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_4').innerHTML=output_s4;
+            }
+
+xhr_1.send();
+xhr_2.send();
+}
+else if ($("option:selected",this).val() == '1003') {
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距图书馆1层
+                s_101_1=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[0].LocX)*(user_01.Routers[0].LocX-user_02.Routers[0].LocX)+(user_01.Routers[0].LocY-user_02.Routers[0].LocY)*(user_01.Routers[0].LocY-user_02.Routers[0].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[0].LocZ)));
+                //教学楼102距图书馆1层
+                s_102_1=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[0].LocX)*(user_01.Routers[1].LocX-user_02.Routers[0].LocX)+(user_01.Routers[1].LocY-user_02.Routers[0].LocY)*(user_01.Routers[1].LocY-user_02.Routers[0].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //图书馆2层距图书馆1层
+                s_1_2=Math.round(Math.sqrt((user_02.Routers[1].LocX-user_02.Routers[0].LocX)*(user_02.Routers[1].LocX-user_02.Routers[0].LocX)+(user_02.Routers[1].LocY-user_02.Routers[0].LocY)*(user_02.Routers[1].LocY-user_02.Routers[0].LocY)+(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //console.log(trying);
+
+                var output_s5=s_101_1;
+               output_s5=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆1层距离: 教学楼101：${s_101_1}；教学楼102：${s_102_1}；图书馆2层: ${s_1_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_5').innerHTML=output_s5;
+            }
+
+xhr_1.send();
+xhr_2.send();
+}
+else{
+var xhr_1 = new XMLHttpRequest();
+            xhr_1.open('GET',"http://localhost:2233/classroom",true);
+
+            xhr_1.onload=function(){
+                user_01=JSON.parse(this.responseText);
+
+            }
+
+
+var xhr_2 = new XMLHttpRequest();
+            var xhr_2 = new XMLHttpRequest();
+            xhr_2.open('GET',"http://localhost:2233/library",true);
+
+            xhr_2.onload=function(){
+                var user_02=JSON.parse(this.responseText);
+
+                //console.log("你真漂亮");
+                //教学楼101距图书馆2层
+                s_101_2=Math.round(Math.sqrt((user_01.Routers[0].LocX-user_02.Routers[1].LocX)*(user_01.Routers[0].LocX-user_02.Routers[1].LocX)+(user_01.Routers[0].LocY-user_02.Routers[1].LocY)*(user_01.Routers[0].LocY-user_02.Routers[1].LocY)+(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[0].LocZ-user_02.Routers[1].LocZ)));
+                //教学楼102距图书馆2层
+                s_102_2=Math.round(Math.sqrt((user_01.Routers[1].LocX-user_02.Routers[1].LocX)*(user_01.Routers[1].LocX-user_02.Routers[1].LocX)+(user_01.Routers[1].LocY-user_02.Routers[1].LocY)*(user_01.Routers[1].LocY-user_02.Routers[1].LocY)+(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)*(user_01.Routers[1].LocZ-user_02.Routers[1].LocZ)));
+                //图书馆2层距图书馆1层
+                s_1_2=Math.round(Math.sqrt((user_02.Routers[1].LocX-user_02.Routers[0].LocX)*(user_02.Routers[1].LocX-user_02.Routers[0].LocX)+(user_02.Routers[1].LocY-user_02.Routers[0].LocY)*(user_02.Routers[1].LocY-user_02.Routers[0].LocY)+(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)*(user_02.Routers[1].LocZ-user_02.Routers[0].LocZ)));
+                //console.log(trying);
+
+                var output_s6=s_101_1;
+               output_s6=`
+                      <div class="user">
+                            <ul>
+                                <li>图书馆2层距离: 教学楼101：${s_101_2}；教学楼102：${s_102_2}；图书馆1层: ${s_1_2}<li>
+                            </ul>
+                      </div>
+                    `;
+                document.getElementById('s_6').innerHTML=output_s6;
+            }
+
+xhr_1.send();
+xhr_2.send();
+}
+});
+});
+
+    function loadJson_1(){
+            //声明一个XHR对象变量
+            var xhr = new XMLHttpRequest();
+            //open方法：初始化一个请求 open(type(GET和POST),url/file,async是否异步)
+            xhr.open('GET',"http://localhost:2233/classroom",true);
+            //两种请求方式 onload / onreadystatechange
+            xhr.onload=function(){
+                
+                var users=JSON.parse(this.responseText);
+
+                var output_t101='';
+                for(var i in users){
+                    output_t101=`
+                      <div class="user">
+                            <ul>
+                                <li>—————————————————————————<li>
+                                <li>教室号:${users.Routers[0].Name}<li>
+                                <li>是否推荐（0不推荐，1推荐）: ${users.Routers[0].IsRecommend}<li>
+                                <li>健康度（0繁忙，1正常，2空闲）: ${users.Routers[0].State}<li>
+                                <li>用户人数: ${users.Routers[0].UserNum}<li>
+                                <li>最大带宽(单位kb): ${users.Routers[0].MaxSpeed}<li>
+                                <li>当前速度(单位kb): ${users.Routers[0].CurSpeed}<li>
+                            </ul>
+                      </div>
+                    `;
+                }
+                document.getElementById('teab_101').innerHTML=output_t101;
+
+                var output_t102='';
+                for(var i in users){
+                    output_t102=`
+                      <div class="user">
+                            <ul>
+                                <li>—————————————————————————<li>
+                                <li>教室号:${users.Routers[1].Name}<li>
+                                <li>是否推荐（0不推荐，1推荐）: ${users.Routers[1].IsRecommend}<li>
+                                <li>健康度（0繁忙，1正常，2空闲）: ${users.Routers[1].State}<li>
+                                <li>用户人数: ${users.Routers[1].UserNum}<li>
+                                <li>最大带宽(单位kb): ${users.Routers[1].MaxSpeed}<li>
+                                <li>当前速度(单位kb): ${users.Routers[1].CurSpeed}<li>
+                            </ul>
+                      </div>
+                    `;
+                }
+                document.getElementById('teab_102').innerHTML=output_t102;
+            }
+            xhr.send();
+    }
+
+    function loadJson_2(){
+            //声明一个XHR对象变量
+            var xhr = new XMLHttpRequest();
+            //open方法：初始化一个请求 open(type(GET和POST),url/file,async是否异步)
+            xhr.open('GET',"http://localhost:2233/library",true);
+            //两种请求方式 onload / onreadystatechange
+            xhr.onload=function(){
+                
+                var users=JSON.parse(this.responseText);
+
+                var output_l1='';
+                for(var i in users){
+                    output_l1=`
+                      <div class="user">
+                            <ul>
+                                <li>—————————————————————————<li>
+                                <li>图书馆楼层: ${users.Routers[0].Name}<li>
+                                <li>是否推荐（0不推荐，1推荐）: ${users.Routers[0].IsRecommend}<li>
+                                <li>健康度（0繁忙，1正常，2空闲）: ${users.Routers[0].State}<li>
+                                <li>用户人数: ${users.Routers[0].UserNum}<li>
+                                <li>最大带宽(单位kb): ${users.Routers[0].MaxSpeed}<li>
+                                <li>当前速度(单位kb): ${users.Routers[0].CurSpeed}<li>
+                            </ul>
+                      </div>
+                    `;
+                }
+                document.getElementById('li_l1').innerHTML=output_l1;
+
+                var output_l2='';
+                for(var i in users){
+                    output_l2=`
+                      <div class="user">
+                            <ul>
+                                <li>—————————————————————————<li>
+                                <li>图书馆楼层: ${users.Routers[1].Name}<li>
+                                <li>是否推荐（0不推荐，1推荐）: ${users.Routers[1].IsRecommend}<li>
+                                <li>健康度（0繁忙，1正常，2空闲）: ${users.Routers[1].State}<li>
+                                <li>用户人数: ${users.Routers[1].UserNum}<li>
+                                <li>最大带宽(单位kb): ${users.Routers[1].MaxSpeed}<li>
+                                <li>当前速度(单位kb): ${users.Routers[1].CurSpeed}<li>
+                            </ul>
+                      </div>
+                    `;
+                }
+                document.getElementById('li_l2').innerHTML=output_l2;
+            }
+            xhr.send();
+    }
+</script>
+</html>
